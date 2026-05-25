@@ -80,6 +80,10 @@ public class Inventory
     public boolean isFull()
     {
         // Replace the next line
+        // If slots is full, then the current size of the list should be equal to the capacity of the inventory
+        if (this.slots.currentSize == this.capacity) {
+            return true;
+        }
         return false;
     }
 
@@ -101,10 +105,30 @@ public class Inventory
     public void addItemStackNoCheck(ItemStack toAdd)
     {
         LinkedList.Node<ItemStack> newNode = new LinkedList.Node<>(toAdd);
-
+        
         // Use the appendNode/add logic from Review 1 as your starting point
         // Once we reach this function... we know that `toAdd` must be stored
+        // Standard linked list append logic based on T Kennedy at 
+        // https://github.com/cstkennedy/cs330-examples/blob/master/01-Java-Linked-Lists/Example-1/src/main/java/containers/LinkedList.java
+        // If the list is empty, we need to initialize head and tail to point to the newNode
+        if (this.slots.head == null) {
+                this.slots.head        = newNode;
+                this.slots.tail        = newNode;
+                this.slots.currentSize = 1;
+        }
+        // If the list is not empty, we need to append to the end of the list
+        else {
+            // Link the newNode to the end of the existing list
+            this.slots.tail.next = newNode;
+
+            // Update tail;
+            this.slots.tail = this.slots.tail.next;
+            
+            // Update the size
+            ++this.slots.currentSize;
+        }
     }
+    
 
     /**
      * Add one or more items to the inventory list.
