@@ -81,10 +81,7 @@ public class Inventory
     {
         // Replace the next line
         // If slots is full, then the current size of the list should be equal to the capacity of the inventory
-        if (this.slots.currentSize == this.capacity) {
-            return true;
-        }
-        return false;
+        return this.slots.currentSize == this.capacity;
     }
 
     /**
